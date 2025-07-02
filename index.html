@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="CSS/style.css">
+  <title>Jogos Educativos</title>
+</head>
+
+<body>
+  <div class="wave-transition" id="wave">
+    <img id="waveImage" src="imgs/osmar-vitoria.png" alt="Onda Transição" class="wave-image osmar">
+  </div>
+
+  <div class="container">
+    <h1>Jogos Educativos</h1>
+    <img src="imgs/WhatsApp Image 2025-04-17 at 13.53.34.jpeg" alt="Imagem Educativa" class="main-img">
+    <h2>Com qual área da geometria você quer brincar?</h2>
+
+    <div class="games-wrapper">
+      <div class="game-choice">
+        <img src="imgs/osmarmenu.png" alt="Personagem Avançado" class="character-img">
+        <button onclick="goToPage('menuAv.html')">Geometria Avançada</button>
+      </div>
+      <div class="game-choice">
+        <img src="imgs/cecilia1.png" alt="Personagem Básico" class="character-img">
+        <button onclick="goToPage('menuba.html')">Geometria Básica</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('wave').classList.add('reveal');
+      }, 200);
+    });
+
+    function goToPage(page) {
+      const wave = document.getElementById('wave');
+      const waveImage = document.getElementById('waveImage');
+      waveImage.src = "imgs/osmar-vitoria.png";
+      wave.classList.remove('reveal');
+      setTimeout(() => {
+        window.location.href = page;
+      }, 1200);
+    }
+  </script>
+</body>
+
+</html>

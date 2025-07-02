@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ângulos e Rotação</title>
+  <link rel="stylesheet" href="CSS/jogo.css">
+</head>
+
+<body>
+
+  <div class="game-box">
+    <h1>Desafio: Ângulos e Rotação</h1>
+
+    <div id="start-container">
+      <label for="nivel">Escolha o tipo de desafio: </label>
+      <select id="nivel">
+        <option value="angulos">Ângulos</option>
+        <option value="rotacao">Rotação</option>
+      </select>
+      <button onclick="startGame()">Iniciar Desafio</button>
+    </div>
+
+    <div id="game-container" style="display:none;">
+      <p id="question"></p>
+      <div id="options"></div>
+      <p id="result" class="hidden"></p>
+      <br>
+      <button onclick="nextQuestion()" id="next-btn">Próxima pergunta</button>
+      <br><br>
+      <button onclick="chooseAnother()" id="restart-btn" style="display:none;">Escolher outro desafio</button>
+    </div>
+
+    <div class="home-link">
+      <a href="menuAv.html"><button>Outros desafios</button></a>
+    </div>
+  </div>
+
+  <script>
+    const desafios = {
+      angulos: [
+        {
+          pergunta: "Um ângulo reto tem quantos graus?",
+          opcoes: ["45°", "90°", "180°", "360°"],
+          resposta: 1
+        },
+        {
+          pergunta: "Qual ângulo é considerado agudo?",
+          opcoes: ["Maior que 90°", "Igual a 180°", "Menor que 90°", "Maior que 270°"],
+          resposta: 2
+        }
+      ],
+      rotacao: [
+        {
+          pergunta: "Rotacionar uma figura 180° significa:",
+          opcoes: ["Virar completamente", "Virar metade de uma volta", "Movê-la lateralmente", "Deixá-la invertida verticalmente"],
+          resposta: 1
+        },
+        {
+          pergunta: "Qual rotação leva um objeto de frente para trás?",
+          opcoes: ["90°", "180°", "270°", "45°"],
+          resposta: 1
+        }
+      ]
+    };
+
+    let tipoAtual = "";
+    let indice = 0;
+
+    function startGame() {
+      tipoAtual = document.getElementById("nivel").value;
+      indice = 0;
+      document.getElementById("start-container").style.display = "none";
+      document.getElementById("game-container").style.display = "block";
+      document.getElementById("restart-btn").style.display = "none";
+      document.getElementById("next-btn").style.display = "inline-block";
+      mostrarPergunta();
+    }
+
+    function mostrarPergunta() {
+      const perguntaObj = desafios[tipoAtual][indice];
+      document.getElementById("question").textContent = perguntaObj.pergunta;
+
+      const opcoesDiv = document.getElementById("options");
+      opcoesDiv.innerHTML = "";
+
+      perguntaObj.opcoes.forEach((texto, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = texto;
+        btn.onclick = () => verificarResposta(i);
+        opcoesDiv.appendChild(btn);
+      });
+
+      const resultado = document.getElementById("result");
+      resultado.textContent = "";
+      resultado.classList.add("hidden");
+    }
+
+    function verificarResposta(escolha) {
+      const correta = desafios[tipoAtual][indice].resposta;
+      const resultado = document.getElementById("result");
+
+      if (escolha === correta) {
+        resultado.textContent = "✅ Resposta correta!";
+        resultado.style.color = "#27ae60";
+      } else {
+        resultado.textContent = "❌ Resposta incorreta.";
+        resultado.style.color = "#e74c3c";
+      }
+
+      resultado.classList.remove("hidden");
+    }
+
+    function nextQuestion() {
+      indice++;
+      const resultado = document.getElementById("result");
+      resultado.textContent = "";
+      resultado.classList.add("hidden");
+
+      if (indice < desafios[tipoAtual].length) {
+        mostrarPergunta();
+      } else {
+        document.getElementById("question").textContent = "🎉 Você concluiu todos os desafios!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("restart-btn").style.display = "inline-block";
+        document.getElementById("next-btn").style.display = "none";
+      }
+    }
+
+    function chooseAnother() {
+      document.getElementById("game-container").style.display = "none";
+      document.getElementById("start-container").style.display = "block";
+      document.getElementById("result").textContent = "";
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById("next-btn").style.display = "none";
+      document.getElementById("options").innerHTML = "";
+    }
+  </script>
+
+</body>
+
+</html>

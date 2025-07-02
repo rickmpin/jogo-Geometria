@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Geometria Mista</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle, #c2e2ec, #84abb5);
+      background-image: url('CSS/cece.jpeg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: 900px;
+      width: 95%;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    #question {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #34495e;
+    }
+
+    .shapes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px 60px;
+      justify-items: center;
+      margin-top: 30px;
+    }
+
+    .shape {
+      width: 100px;
+      height: 100px;
+      transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+    }
+
+    .circle,
+    .square,
+    .rectangle {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .circle:hover,
+    .square:hover,
+    .rectangle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+    }
+
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-bottom: 100px solid #2ecc71;
+    }
+
+    .triangle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+    }
+
+    .rhombus,
+    .pentagon,
+    .hexagon,
+    .trapezoid {
+      transition: transform 0.3s, filter 0.3s;
+    }
+
+    .rhombus:hover,
+    .pentagon:hover,
+    .hexagon:hover,
+    .trapezoid:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+      cursor: pointer;
+    }
+
+    .circle {
+      border-radius: 50%;
+      background: #e74c3c;
+    }
+
+    .square {
+      background: #3498db;
+    }
+
+    .rectangle {
+      background: #795548;
+      width: 150px;
+      height: 100px;
+    }
+
+    .rhombus {
+      background: orange;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+
+    .pentagon {
+      background: #f39c12;
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    }
+
+    .hexagon {
+      background: #8e44ad;
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    }
+
+    .trapezoid {
+      background: #16a085;
+      clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+    }
+
+    button {
+      background: #5f8ee0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #083db1;
+    }
+
+    #result {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-top: 20px;
+      color: #2c3e50;
+    }
+
+    #backButton {
+      display: none;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Jogo: Geometria Mista</h1>
+    <p id="question">Clique na forma: Círculo</p>
+
+    <div class="shapes">
+      <div class="shape rectangle" onclick="checkAnswer('retângulo')"></div>
+      <div class="shape circle" onclick="checkAnswer('círculo')"></div>
+      <div class="shape trapezoid" onclick="checkAnswer('trapézio')"></div>
+      <div class="shape triangle" onclick="checkAnswer('triângulo')"></div>
+      <div class="shape pentagon" onclick="checkAnswer('pentágono')"></div>
+      <div class="shape hexagon" onclick="checkAnswer('hexágono')"></div>
+      <div class="shape rhombus" onclick="checkAnswer('losango')"></div>
+      <div class="shape square" onclick="checkAnswer('quadrado')"></div>
+    </div>
+
+    <p id="result"></p>
+    <button id="backButton" onclick="goBack()">Voltar ao menu da Geometria Básica</button>
+  </div>
+
+  <script>
+    const formas = [
+      "círculo",
+      "quadrado",
+      "retângulo",
+      "triângulo",
+      "pentágono",
+      "trapézio",
+      "losango",
+      "hexágono"
+    ];
+
+    const perguntas = [
+      {
+        texto: "O que diferencia um polígono irregular de um regular?",
+        opcoes: [
+          "Número de lados diferentes",
+          "Lados e ângulos variáveis",
+          "Sempre é um círculo",
+          "Tem menos de três lados"
+        ],
+        resposta: 1
+      },
+      {
+        texto: "Qual dessas formas é considerada irregular?",
+        opcoes: [
+          "Pentágono regular",
+          "Quadrado",
+          "Trapézio escaleno",
+          "Triângulo equilátero"
+        ],
+        resposta: 2
+      }
+    ];
+
+    let indiceForma = 0;
+    let indicePergunta = 0;
+    let usandoPerguntas = false;
+
+    function checkAnswer(resposta) {
+      const atual = formas[indiceForma];
+      const resultado = document.getElementById("result");
+
+      if (!usandoPerguntas) {
+        if (resposta === atual) {
+          resultado.textContent = "✅ Correto!";
+          resultado.style.color = "#27ae60";
+          indiceForma++;
+          if (indiceForma < formas.length) {
+            setTimeout(() => {
+              resultado.textContent = "";
+              document.getElementById("question").textContent = "Clique na forma: " + capitalizar(formas[indiceForma]);
+            }, 1000);
+          } else {
+            usandoPerguntas = true;
+            indicePergunta = 0;
+            resultado.textContent = "";
+            mostrarPerguntaIrregular();
+          }
+        } else {
+          resultado.textContent = "❌ Essa não é a forma correta.";
+          resultado.style.color = "#e74c3c";
+        }
+      }
+    }
+
+    function mostrarPerguntaIrregular() {
+      const p = perguntas[indicePergunta];
+            document.getElementById("question").textContent = p.texto;
+
+      const shapeArea = document.querySelector(".shapes");
+      shapeArea.innerHTML = "";
+
+      p.opcoes.forEach((op, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = op;
+        btn.style.margin = "10px";
+        btn.onclick = () => responderPergunta(i);
+        shapeArea.appendChild(btn);
+      });
+    }
+
+    function responderPergunta(indice) {
+      const p = perguntas[indicePergunta];
+      const resultado = document.getElementById("result");
+
+      if (indice === p.resposta) {
+        resultado.textContent = "✅ Resposta correta!";
+        resultado.style.color = "#27ae60";
+      } else {
+        resultado.textContent = "❌ Resposta incorreta.";
+        resultado.style.color = "#e74c3c";
+      }
+
+      resultado.classList.remove("hidden");
+      indicePergunta++;
+
+      if (indicePergunta < perguntas.length) {
+        setTimeout(() => {
+          resultado.textContent = "";
+          mostrarPerguntaIrregular();
+        }, 1500);
+      } else {
+        setTimeout(() => {
+          document.getElementById("question").textContent = "🎉 Você concluiu todos os desafios!";
+          document.querySelector(".shapes").innerHTML = "";
+          resultado.textContent = "";
+          document.getElementById("backButton").style.display = "inline-block";
+        }, 1500);
+      }
+    }
+
+    function capitalizar(txt) {
+      return txt.charAt(0).toUpperCase() + txt.slice(1);
+    }
+
+    function goBack() {
+      window.location.href = "menuba.html";
+    }
+
+    // Início automático
+    document.getElementById("question").textContent = "Clique na forma: " + capitalizar(formas[indiceForma]);
+  </script>
+
+</body>
+</html>

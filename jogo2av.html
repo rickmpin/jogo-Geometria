@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polígonos Irregulares</title>
+  <link rel="stylesheet" href="CSS/jogo.css">
+</head>
+
+<body>
+
+  <div class="game-box">
+    <h1>Desafio: Polígonos Irregulares</h1>
+
+    <div id="start-container">
+      <label for="nivel">Escolha o tipo de desafio: </label>
+      <select id="nivel">
+        <option value="identificacao">Identificação</option>
+        <option value="area">Cálculo de área</option>
+        <option value="propriedades">Propriedades</option>
+      </select>
+      <button onclick="startGame()">Iniciar Desafio</button>
+    </div>
+
+    <div id="game-container" style="display:none;">
+      <p id="question"></p>
+      <div id="options"></div>
+      <p id="result" class="hidden"></p>
+      <br>
+      <button onclick="nextQuestion()" id="next-btn">Próxima pergunta</button>
+      <br><br>
+      <button onclick="chooseAnother()" id="restart-btn" style="display:none;">Escolher outro desafio</button>
+    </div>
+
+    <div class="home-link">
+      <a href="menuAv.html"><button>Outros desafios</button></a>
+    </div>
+  </div>
+
+  <script>
+    const desafios = {
+      identificacao: [
+        {
+          pergunta: "Qual destas é característica de um polígono irregular?",
+          opcoes: ["Todos os lados iguais", "Todos os ângulos iguais", "Lados diferentes e ângulos variados", "Formato circular"],
+          resposta: 2
+        },
+        {
+          pergunta: "Qual figura abaixo é mais próxima de um polígono irregular?",
+          opcoes: ["Quadrado", "Retângulo", "Pentágono regular", "Trapézio escaleno"],
+          resposta: 3
+        }
+      ],
+      area: [
+        {
+          pergunta: "Para calcular a área de um polígono irregular você pode usar:",
+          opcoes: ["Fórmula fixa", "Divisão em figuras menores", "Multiplicação direta dos lados", "Somar os ângulos"],
+          resposta: 1
+        },
+        {
+          pergunta: "O que é necessário para calcular corretamente a área de um polígono irregular?",
+          opcoes: ["Só o perímetro", "A altura total", "Uma malha ou divisão por triângulos", "A cor da figura"],
+          resposta: 2
+        }
+      ],
+      propriedades: [
+        {
+          pergunta: "A soma dos ângulos internos de um polígono de 7 lados é:",
+          opcoes: ["720°", "900°", "1080°", "1260°"],
+          resposta: 1
+        },
+        {
+          pergunta: "Um polígono irregular pode ter:",
+          opcoes: ["Lados de medidas iguais sempre", "Lados de tamanhos diferentes", "Somente ângulos retos", "Somente 3 lados"],
+          resposta: 1
+        }
+      ]
+    };
+
+    let tipoAtual = "";
+    let indice = 0;
+
+    function startGame() {
+      tipoAtual = document.getElementById("nivel").value;
+      indice = 0;
+      document.getElementById("start-container").style.display = "none";
+      document.getElementById("game-container").style.display = "block";
+      document.getElementById("restart-btn").style.display = "none";
+      document.getElementById("next-btn").style.display = "inline-block";
+      mostrarPergunta();
+    }
+
+    function mostrarPergunta() {
+      const perguntaObj = desafios[tipoAtual][indice];
+      document.getElementById("question").textContent = perguntaObj.pergunta;
+
+      const opcoesDiv = document.getElementById("options");
+      opcoesDiv.innerHTML = "";
+
+      perguntaObj.opcoes.forEach((texto, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = texto;
+        btn.onclick = () => verificarResposta(i);
+        opcoesDiv.appendChild(btn);
+      });
+
+      const resultado = document.getElementById("result");
+      resultado.textContent = "";
+      resultado.classList.add("hidden");
+    }
+
+    function verificarResposta(escolha) {
+      const correta = desafios[tipoAtual][indice].resposta;
+      const resultado = document.getElementById("result");
+
+      if (escolha === correta) {
+        resultado.textContent = "✅ Resposta correta!";
+        resultado.style.color = "#27ae60";
+      } else {
+        resultado.textContent = "❌ Resposta incorreta.";
+        resultado.style.color = "#e74c3c";
+      }
+
+      resultado.classList.remove("hidden");
+    }
+
+    function nextQuestion() {
+      indice++;
+      const resultado = document.getElementById("result");
+      resultado.textContent = "";
+      resultado.classList.add("hidden");
+
+      if (indice < desafios[tipoAtual].length) {
+        mostrarPergunta();
+      } else {
+        document.getElementById("question").textContent = "🎉 Você concluiu todos os desafios!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("restart-btn").style.display = "inline-block";
+        document.getElementById("next-btn").style.display = "none";
+      }
+    }
+
+    function chooseAnother() {
+      document.getElementById("game-container").style.display = "none";
+      document.getElementById("start-container").style.display = "block";
+      document.getElementById("result").textContent = "";
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById("next-btn").style.display = "none";
+      document.getElementById("options").innerHTML = "";
+    }
+  </script>
+
+</body>
+
+</html>

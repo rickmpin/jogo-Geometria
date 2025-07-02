@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha seu Desafio de Geometria basica</title>
+    <link rel="stylesheet" href="CSS/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+            /* Impede que a tela role durante a animação */
+        }
+
+        .main-title {
+            font-size: 3rem;
+            color: #286e1a;
+            text-shadow: 2px 2px #000000, 4px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+            /* Garante que o container fica acima da onda */
+            opacity: 1;
+            transition: opacity 1.2s ease;
+            /* Suaviza a transição de visibilidade */
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: #dcedc8;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-card h2 {
+            margin-bottom: 15px;
+            color: #444;
+            font-size: 1.2rem;
+        }
+
+        button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #388e3c;
+            transform: scale(1.05);
+        }
+
+        .image-container {
+            position: absolute;
+            right: -60px;
+            bottom: -140px;
+            width: 150px;
+        }
+
+        .image-container img {
+            width: 220px;
+            border-radius: 10px;
+        }
+
+        /* A onda que desce */
+        .wave-transition {
+            position: fixed;
+            top: 0;
+            /* Começa cobrindo toda a tela */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ff6b6b;
+            border-top-left-radius: 50% 20%;
+            border-top-right-radius: 50% 20%;
+            z-index: 9999;
+            transition: top 1.2s ease;
+            /* Animação suave */
+        }
+
+        /* Quando a animação começar, a onda desce para revelar o conteúdo */
+        .wave-transition.reveal {
+            top: 100%;
+        }
+
+        /* Imagem da onda que sobe */
+        .wave-transition .wave-image {
+            position: absolute;
+            bottom: -360px;
+            left: 62%;
+            transform: translateX(-50%) rotate(0deg);
+            width: 710px;
+            /* Aumentei a imagem para ser maior */
+            height: auto;
+            animation: floatTilt 4s ease-in-out infinite;
+        }
+
+        @keyframes floatTilt {
+            0% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+
+            25% {
+                transform: translateX(-50%) rotate(4deg);
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+
+            75% {
+                transform: translateX(-50%) rotate(-4deg);
+            }
+
+            100% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+  <div class="wave-transition" id="wave">
+    <img src="imgs/cecilia-vitoria.png" alt="Cecilia" class="wave-image">
+  </div>
+
+  <h1 class="main-title">Escolha seu Desafio de Geometria Básica!</h1>
+
+  <div class="container">
+    <div class="games-grid">
+      <div class="game-card">
+        <h2>Jogo 1: Formas e Identificação</h2>
+        <a href="jogo1ba.html"><button>Jogar</button></a>
+      </div>
+      <div class="game-card">
+        <h2>Jogo 2: Polígonos Irregulares</h2>
+        <a href="jogo2ba.html"><button>Jogar</button></a>
+      </div>
+      <div class="game-card">
+        <h2>Jogo 3: Formas no cotidiano</h2>
+        <a href="jogo3ba.html"><button>Jogar</button></a>
+      </div>
+      <div class="game-card">
+        <h2>Jogo 4: Geometria Mista</h2>
+        <a href="jogo4ba.html"><button>Jogar</button></a>
+      </div>
+    </div>
+
+    <div class="image-container">
+      <img src="imgs/cecilia-escolha.png" alt="Imagem da personagem Cecilia">
+    </div>
+
+    <div class="home-link">
+      <button onclick="goBack()">Voltar ao Menu</button>
+    </div>
+  </div>
+
+  <script>
+    const wave = document.getElementById('wave');
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        wave.classList.add('reveal');
+      }, 100);
+    });
+    function goBack() {
+      wave.classList.remove('reveal');
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1200);
+    }
+  </script>
+
+</body>
+
+</html>

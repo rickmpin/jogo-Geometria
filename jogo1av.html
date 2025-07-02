@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formas 3D e Volumes</title>
+  <link rel="stylesheet" href="CSS/jogo.css">
+</head>
+
+<body>
+
+  <div class="game-box">
+    <h1>Desafio: Formas 3D e Volumes</h1>
+
+    <div id="start-container">
+      <label for="shape">Escolha uma forma 3D: </label>
+      <select id="shape">
+        <option value="cubo">Cubo</option>
+        <option value="cilindro">Cilindro</option>
+        <option value="cone">Cone</option>
+        <option value="esfera">Esfera</option>
+      </select>
+      <button onclick="startGame()">Iniciar Desafio</button>
+    </div>
+
+    <div id="game-container" style="display:none;">
+      <p id="question"></p>
+      <div id="options"></div>
+      <p id="result" class="hidden"></p>
+      <br>
+      <button onclick="nextQuestion()" id="next-btn">Próxima pergunta</button>
+      <br><br>
+      <button onclick="chooseAnother()" id="restart-btn" style="display:none;">Escolher outra forma</button>
+    </div>
+
+    <div class="home-link">
+      <a href="menuAv.html"><button>Outros desafios</button></a>
+    </div>
+  </div>
+
+  <script>
+    const desafios = {
+      cubo: [
+        {
+          pergunta: "Um cubo tem lados de 5 cm. Qual é o volume?",
+          opcoes: ["125 cm³", "25 cm³", "15 cm³", "100 cm³"],
+          resposta: 0
+        },
+        {
+          pergunta: "Um cubo tem lados de 2 cm. Qual o volume?",
+          opcoes: ["6 cm³", "4 cm³", "8 cm³", "2 cm³"],
+          resposta: 2
+        }
+      ],
+      cilindro: [
+        {
+          pergunta: "Um cilindro tem raio 3 cm e altura 5 cm. Aproximadamente qual o volume?",
+          opcoes: ["141.3 cm³", "45 cm³", "120 cm³", "75.4 cm³"],
+          resposta: 0
+        },
+        {
+          pergunta: "Raio 2 cm e altura 4 cm. Volume?",
+          opcoes: ["50.3 cm³", "27 cm³", "16.8 cm³", "25.1 cm³"],
+          resposta: 3
+        }
+      ],
+      cone: [
+        {
+          pergunta: "Um cone com raio 3 cm e altura 6 cm. Volume aproximado?",
+          opcoes: ["56.5 cm³", "85 cm³", "66.4 cm³", "33.9 cm³"],
+          resposta: 3
+        },
+        {
+          pergunta: "Raio 2 cm e altura 9 cm. Volume?",
+          opcoes: ["37.7 cm³", "12 cm³", "18.8 cm³", "60 cm³"],
+          resposta: 0
+        }
+      ],
+      esfera: [
+        {
+          pergunta: "Uma esfera com raio 2 cm. Qual volume?",
+          opcoes: ["33.5 cm³", "16.8 cm³", "12.5 cm³", "20 cm³"],
+          resposta: 0
+        },
+        {
+          pergunta: "Raio de 4 cm. Volume aproximado?",
+          opcoes: ["268.1 cm³", "120 cm³", "175.2 cm³", "90 cm³"],
+          resposta: 0
+        }
+      ]
+    };
+
+    let formaAtual = "";
+    let indice = 0;
+
+    function startGame() {
+      formaAtual = document.getElementById("shape").value;
+      indice = 0;
+      document.getElementById("start-container").style.display = "none";
+      document.getElementById("game-container").style.display = "block";
+      document.getElementById("restart-btn").style.display = "none";
+      document.getElementById("next-btn").style.display = "inline-block";
+      mostrarPergunta();
+    }
+
+    function mostrarPergunta() {
+      const perguntaObj = desafios[formaAtual][indice];
+      document.getElementById("question").textContent = perguntaObj.pergunta;
+
+      const opcoesDiv = document.getElementById("options");
+      opcoesDiv.innerHTML = "";
+
+      perguntaObj.opcoes.forEach((texto, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = texto;
+        btn.onclick = () => verificarResposta(i);
+        opcoesDiv.appendChild(btn);
+      });
+
+      const resultado = document.getElementById("result");
+      resultado.textContent = "";
+      resultado.classList.add("hidden");
+    }
+
+    function verificarResposta(escolha) {
+      const correta = desafios[formaAtual][indice].resposta;
+      const resultado = document.getElementById("result");
+
+      if (escolha === correta) {
+        resultado.textContent = "✅ Resposta correta!";
+        resultado.style.color = "#27ae60";
+      } else {
+        resultado.textContent = "❌ Resposta incorreta.";
+        resultado.style.color = "#e74c3c";
+      }
+
+      resultado.classList.remove("hidden");
+    }
+
+    function nextQuestion() {
+      indice++;
+      const resultado = document.getElementById("result");
+      resultado.textContent = "";
+      resultado.classList.add("hidden");
+
+      if (indice < desafios[formaAtual].length) {
+        mostrarPergunta();
+      } else {
+        document.getElementById("question").textContent = "🎉 Você concluiu todos os desafios!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("restart-btn").style.display = "inline-block";
+        document.getElementById("next-btn").style.display = "none"; // oculta botão
+      }
+    }
+
+    function chooseAnother() {
+      document.getElementById("game-container").style.display = "none";
+      document.getElementById("start-container").style.display = "block";
+      document.getElementById("result").textContent = "";
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById("next-btn").style.display = "none";
+      document.getElementById("options").innerHTML = "";
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formas no Cotidiano</title>
+  <link rel="stylesheet" href="CSS/jogo.css">
+</head>
+
+<body>
+
+  <div class="game-box">
+    <h1>Jogo: Formas no Cotidiano</h1>
+
+    <div id="start-container">
+      <button onclick="startGame()">Iniciar Desafio</button>
+    </div>
+
+    <div id="game-container" style="display:none;">
+      <img id="image" src="" alt="Objeto" style="width:200px; height:auto; margin:20px;">
+      <p id="question"></p>
+      <div id="options"></div>
+      <p id="result" class="hidden"></p>
+      <br>
+      <button onclick="nextQuestion()" id="next-btn">Próxima pergunta</button>
+      <br><br>
+      <button onclick="goBack()" id="backButton" style="display:none;">Voltar ao menu da Geometria Básica</button>
+    </div>
+  </div>
+
+  <script>
+    const desafios = [
+      {
+        imagem: "imgs/cotidiano/placa1.webp",
+        pergunta: "Qual forma representa esta placa de trânsito?",
+        opcoes: ["Retângulo", "Losango", "Círculo", "Pentágono"],
+        resposta: 1
+      },
+      {
+        imagem: "imgs/cotidiano/relogio2.webp",
+        pergunta: "Qual forma descreve melhor este objeto?",
+        opcoes: ["Quadrado", "Triângulo", "Círculo", "Hexágono"],
+        resposta: 2
+      },
+      {
+        imagem: "imgs/cotidiano/janela2.jpg",
+        pergunta: "Esta janela tem o formato de qual figura?",
+        opcoes: ["Trapézio", "Quadrado", "Retângulo", "Losango"],
+        resposta: 2
+      },
+      {
+        imagem: "imgs/cotidiano/mesa.jpg",
+        pergunta: "Esta mesa é mais próxima de qual forma?",
+        opcoes: ["Retângulo", "Triângulo", "Círculo", "Pentágono"],
+        resposta: 0
+      }
+    ];
+
+    let indice = 0;
+
+    function startGame() {
+      indice = 0;
+      document.getElementById("start-container").style.display = "none";
+      document.getElementById("game-container").style.display = "block";
+      document.getElementById("backButton").style.display = "none";
+      document.getElementById("next-btn").style.display = "inline-block";
+      mostrarPergunta();
+    }
+
+    function mostrarPergunta() {
+      const atual = desafios[indice];
+      document.getElementById("image").src = atual.imagem;
+      document.getElementById("question").textContent = atual.pergunta;
+
+      const opcoesDiv = document.getElementById("options");
+      opcoesDiv.innerHTML = "";
+
+      atual.opcoes.forEach((texto, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = texto;
+        btn.onclick = () => verificarResposta(i);
+        opcoesDiv.appendChild(btn);
+      });
+
+      const resultado = document.getElementById("result");
+      resultado.textContent = "";
+      resultado.classList.add("hidden");
+    }
+
+    function verificarResposta(escolha) {
+      const correta = desafios[indice].resposta;
+      const resultado = document.getElementById("result");
+
+      if (escolha === correta) {
+        resultado.textContent = "✅ Resposta correta!";
+        resultado.style.color = "#27ae60";
+      } else {
+        resultado.textContent = "❌ Resposta incorreta.";
+        resultado.style.color = "#e74c3c";
+      }
+
+      resultado.classList.remove("hidden");
+    }
+
+    function nextQuestion() {
+      indice++;
+      const resultado = document.getElementById("result");
+      resultado.textContent = "";
+      resultado.classList.add("hidden");
+
+      if (indice < desafios.length) {
+        mostrarPergunta();
+      } else {
+        document.getElementById("question").textContent = "🎉 Você concluiu todos os desafios!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("next-btn").style.display = "none";
+        document.getElementById("image").style.display = "none";
+        document.getElementById("backButton").style.display = "inline-block";
+      }
+    }
+
+    function goBack() {
+      window.location.href = "menuba.html";
+    }
+  </script>
+
+</body>
+
+</html>

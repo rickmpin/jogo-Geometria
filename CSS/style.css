@@ -1,0 +1,188 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle, rgba(222, 193, 193, 1) 0%, rgba(232, 172, 192, 1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    background-image: url(cece.jpeg);
+    background-size: cover; /* Ajusta a imagem para cobrir todo o fundo */
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: bgFloat 20s ease-in-out infinite alternate;
+}
+
+@keyframes bgFloat {
+    0% {
+        background-position: center center;
+    }
+    50% {
+        background-position: 52% 48%;
+    }
+    100% {
+        background-position: center center;
+    }
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    max-width: 700px;
+    width: 90%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+h2 {
+    font-size: 1.6rem;
+    margin: 25px 0;
+    color: #333;
+}
+
+@keyframes slide-left {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.main-img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    animation: slide-left 2s ease-in-out infinite;
+}
+
+.osmar-img {
+    width: 200px;
+    margin: 10px 0;
+}
+
+.game-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+}
+
+button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff4757;
+    transform: scale(1.05);
+}
+
+a.btn-link {
+    text-decoration: none;
+}
+
+.games-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.character-img {
+    width: 220px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.wave-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ff6b6b;
+    border-top-left-radius: 50% 20%;
+    border-top-right-radius: 50% 20%;
+    z-index: 9999;
+    transition: top 1.2s ease;
+}
+
+/* Quando a onda desce, revela o conteúdo */
+.wave-transition.reveal {
+    top: 100%;
+}
+
+.wave-transition .wave-image.osmar {
+    position: absolute;
+    bottom: -370px;
+    left: 41%;
+    transform: translateX(-50%) rotate(0deg);
+    width: 100%; /* Ajusta a largura para 100% em relação ao contêiner */
+    max-width: 700px; /* Define um valor máximo para a largura */
+    height: auto;     /* Mantém a proporção da imagem */
+    animation: floatTilt 4s ease-in-out infinite;
+}
+
+.wave-transition .wave-image.cecilia {
+    position: absolute;
+    bottom: -360px;
+    left: 600%;
+    transform: translateX(-50%) rotate(0deg);
+    width: 100%; /* Ajusta a largura para 100% em relação ao contêiner */
+    max-width: 710px; /* Define um valor máximo para a largura */
+    height: auto;     /* Mantém a proporção da imagem */
+    animation: floatTilt 4s ease-in-out infinite;
+}
+
+/* Restante do CSS permanece o mesmo... */
+
+@keyframes floatTilt {
+    0% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    25% {
+        transform: translateX(-50%) rotate(4deg);
+    }
+    50% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    75% {
+        transform: translateX(-50%) rotate(-4deg);
+    }
+    100% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+}

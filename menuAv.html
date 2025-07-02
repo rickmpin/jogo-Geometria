@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha seu Desafio de Matemática</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            color: #286e1a;
+            text-shadow: 2px 2px #000000, 4px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: #dcedc8;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-card h2 {
+            margin-bottom: 15px;
+            color: #444;
+            font-size: 1.2rem;
+        }
+
+        button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #388e3c;
+            transform: scale(1.05);
+        }
+
+        .image-container {
+            position: absolute;
+            right: -60px;
+            bottom: -140px;
+            width: 150px;
+        }
+
+        .image-container img {
+            width: 220px;
+            border-radius: 10px;
+        }
+
+        .wave-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ff6b6b;
+            border-top-left-radius: 50% 20%;
+            border-top-right-radius: 50% 20%;
+            z-index: 9999;
+            transition: top 1.2s ease;
+        }
+
+        /* Quando a onda desce, revela o conteúdo */
+        .wave-transition.reveal {
+            top: 100%;
+        }
+
+        /* Imagem que sobe junto da onda agora MAIOR e centralizada */
+        .wave-transition .wave-image {
+            position: absolute;
+            bottom: -370px;
+            left: 40%;
+            transform: translateX(-50%) rotate(0deg);
+            width: 700px;
+            /* Aumentei a imagem para ser maior */
+            height: auto;
+            animation: floatTilt 4s ease-in-out infinite;
+        }
+
+        @keyframes floatTilt {
+            0% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+
+            25% {
+                transform: translateX(-50%) rotate(4deg);
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+
+            75% {
+                transform: translateX(-50%) rotate(-4deg);
+            }
+
+            100% {
+                transform: translateX(-50%) rotate(0deg);
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+  <div class="wave-transition" id="wave">
+    <img src="imgs/osmar-vitoria.png" alt="Onda Transição" class="wave-image">
+  </div>
+
+  <h1 class="main-title">Escolha seu Desafio de Geometria Avançada!</h1>
+
+  <div class="container">
+    <div class="games-grid">
+      <div class="game-card">
+        <h2>Formas 3D e Volumes</h2>
+        <a href="jogo1av.html"><button>Jogar</button></a>
+      </div>
+      <div class="game-card">
+        <h2>Área de Polígonos Irregulares</h2>
+        <a href="jogo2av.html"><button>Jogar</button></a>
+      </div>
+      <div class="game-card">
+        <h2>Ângulos e Rotação</h2>
+        <a href="jogo3av.html"><button>Jogar</button></a>
+      </div>
+      <div class="game-card">
+        <h2>Geometria Mista</h2>
+        <a href="jogo4av.html"><button>Jogar</button></a>
+      </div>
+    </div>
+
+    <div class="image-container">
+      <img src="imgs/osmar-escolha2.png" alt="Personagem Osmar">
+    </div>
+  </div>
+
+  <button onclick="goToPage('index.html')">Voltar à página principal</button>
+
+  <script>
+    const wave = document.getElementById('wave');
+
+    window.addEventListener('load', () => {
+      wave.classList.remove('reveal');
+      setTimeout(() => {
+        wave.classList.add('reveal');
+      }, 100);
+    });
+
+    function goToPage(url) {
+      wave.classList.remove('reveal');
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1200);
+    }
+  </script>
+
+</body>
+
+</html>
